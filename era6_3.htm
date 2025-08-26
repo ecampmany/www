@@ -1,0 +1,95 @@
+<html>
+<head>
+    <title>VORTEX: ERA6 Reanalysis (III)</title>
+    <meta name="keywords" content="Reanalysis, ECMWF, ERA5, ERA6, Atmospheric reanalysis, European Centre for Medium-Range Weather Forecasts, Mesoscale, High resolution, Satellite, WindEurope, WindTech25, Vortex"></head>
+<body>
+    <h1>Transitioning from ERA5 to ERA6: Insights from High-Resolution Simulations Using WRF</h1>
+    <p>
+       As explained in previous posts (<a href=vortex.cgi?era6.htm>ERA6 Reanalysis. Prologue</a> and <a href=vortex.cgi?era6_2.htm>ERA6 reanalysis Key Improvements</a>, the new reanalysis ERA6 is expected to be released by the end of 2026. So far, the European Center for Medium-Range Weather Forecasts (ECMWF) has released two preliminary test batches: one covering three months (June to August 2022) and another spanning seven months (October 2019 - April 2020). These datasets are still a prototype so any insights derived from them should be considered early-stage, not final conclusions. 
+    </p>
+    <h2>ERA5 and ERA6 Surface Comparison</h2>
+    Before using any WRF simulations, ERA5 and ERA6 were compared at the<b>100m surface level</b>. The plot below shows the R2 coefficient for daily wind speed correlation between both datasets. In general, agreement is high, though some differences appear in areas with complex topography or consistently low wind speeds.
+     
+<p><div align=center>
+<img src=../vortex/img/correlation_era6.png width=75%>
+<br><font size=2>ERA5 and ERA6 surface-level similarity. Blue areas indicate higher divergence datasets; yellow-green areas show strong agreement</font>
+</div><p><br>
+
+<h2>WRF Modeling</h2>
+Both ERA5 and ERA6 datasets were dynamically downscaled using WRF to assess performance differences. Reanalysis data were used as initial and boundary conditions. Land cover data were sourced from the 300 m-resolution <b>Globcover</b> database (European Space Agency) which was used to quantify roughness length and albedo. Elevation data came from NASA's 90 m-resolution <b>SRTM topography</b>. 
+<br>
+Nested domains with a 3:1 ratio were used to achieve a final resolution of 3 km. The output time series are not simple interpolations but full WRF dynamic downscaling.
+
+
+<h2>Global Validation</h2>
+The same WRF setup was applied to both ERA5 and ERA6 3D datasets. Simulations were run across <b>1,000 locations</b> with a relevant wind resource, distributed in <b>40 countries</b>. Validation was done against on-site observations was made where available. <br>
+The ERA6 reanalysis surface was not validated directly against observations as it only includes 10m and 100m levels. No height extrapolation (e.g. using power-law wind profiles) was applied to avoid introducing additional uncertaintly to the analysis.
+<p></p>
+
+<p><div align=center>
+<table width="50%">
+        <tr><th></th><th>ERA5</th><th>ERA6</th></tr>
+        <tr><td>Hourly R2</td><td>0.71</td><td>0.72</td></tr>
+        <tr><td>BIAS (%)</td><td>8.13</td><td>8.15</td></tr>
+</table>
+<br><font size=2>Global results summary</font>
+</div><p><br>
+
+Differences are minor overall. ERA6 shows a slight improvement in correlation, while the bias remains similar. For deeper insight, results were analyzed at the country level.
+<p></p>
+
+
+
+<h2>Regional Validation</h2>
+The figure below shows the results for all 40 countries in terms of <b>hourly correlation</b> and <b>Mean Absolute Bias</b> against observations. Each dot represent a country.<br>
+The horizontal axis represents the improvement in R2 coefficient, if a dot is on the right it means that ERA6 correlates better than ERA5 with observations. 
+The vertical axis shows the improvement in the Mean absolute bias, countries above the line have lower bias with ERA6 than with ERA5 against observations.<br>
+Ideally, countries in the upper-right quadrant represent cases where ERA6 performs better than ERA5.
+<p><div align=center>
+<img src=../vortex/img/regional.png width=95%>
+<br><font size=2>Country level validation of 3km WRF time series with ERA5 and ERA6</font>
+</div><p><br>
+<h2>North Atlantic and Africa</h2>
+Zooming into regional comparisons, for the North Atlantic and Africa, improvements are more evident. The bar chart on the right shows the comparison between ERA5 (pink) and ERA6 (violet) for both hourly correlation and Mean Absolute Bias.
+<br>
+Most countries fall the in the upper-right quadrant, meaning ERA6 improves over ERA5 in both metrics. The <b>UK</b> is a notable exception, where ERA6 slightly underperforms ERA5 in both correlation and bias.
+<p><div align=center>
+<img src=../vortex/img/otan.png width=95%>
+<br><font size=2>BIAS and Correlation for North Atlantic and Africa countries</font>
+</div><p><br>
+<h2>Latin America</h2>
+In Latin America, ERA6 shows clear improvement in correlation, particularly in <b>Chile</b> and <b>Colombia</b>. However, these improvements come with a slight increase in bias.<br>
+
+In contrast, <b>Mexico</b> and <b>Peru</b>, show improvements in both correlation and bias, which is encouraging. <b>Brazil</b> remains mainly the same for ERA6 and ERA5.
+<p><div align=center>
+<img src=../vortex/img/latam.png width=95%>
+<br><font size=2>BIAS and Correlation for LATAM countries</font>
+</div><p><br>
+<h2>Asia Pacific</h2>
+In Southeast Asia, <b>Cambodia</b> and <b>Thailand</b> stand out as outliers, with significantly higher bias in ERA6 and lower correlation. <br> 
+The rest of the countries show modest improvement in bias, with <b>Japan</b> being the only country to also show better correlation. 
+<p><div align=center>
+<img src=../vortex/img/sea.png width=95%>
+<br><font size=2>BIAS and Correlation for South East Asia countries</font>
+</div><p><br>
+
+<h2>Conclusions and next steps</h2>
+<ul>
+<li>At a <b>global scale</b>, ERA6 WRF simulations show <b>similar bias</b> to ERA5, with a <b>1% improvement in correlation.</b></li>
+<li>At the <b>regional scale</b>, ERA6 outperforms ERA5 in about <b>70% of the 40 countries</b> analyzed.</li>
+<li>These results should be taken with caution, as the <b>ERA6 prototype</b> covers only <b>7 months</b>.The analysis will need to be updated once the full ERA6 reanalysis becomes available.
+<li>The full ERA6 dataset will allow for multiple years and seasons analysis to assess <b>long-term consistency</b> and <b>interannual variability</b>.</li>
+<li>Future work will focus on critical periods and <b>extreme events</b> in regions with strong seasonal signals and whether specific <b>WRF configurations</b> can further enhance the results using ERA6.</li>
+</ul>
+
+
+
+<p><br>
+    <h3>References:</h3>
+    <ul> 
+        <li> Campmany, Elies, Pau Casso and Marta Gil  (2025). <i>Transitioning from ERA5 to ERA6: Insights from High-Resolution. Simulations Using WRF</i>. <a href=https://windeurope.org/tech2025/proceedings/>AEP Validation II, Wind Europe Technology Workshop 2025, Proceedings</a>
+        
+</ul>
+<p></p><br>
+</body>
+</html>

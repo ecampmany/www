@@ -1,0 +1,44 @@
+<html>
+        <title>VORTEX: About Time zones</title>
+        <meta name="keywords" content="Cartography, World Geodetic System, WGS84, GPS, Latitude, Longitude, Geographic Coordinates, Time zones, Local time, UTC, Standard time, Greenwich, GMT, Universal Time, Daylight Saving Timei, ISO8601">
+        <body>
+        <h1>
+An introduction on time zones
+        </h1>
+Time zones around the world are defined by using positive or negative offsets, corresponding to moving east or west to the Greenwhich meridian (longitude=0). <br>
+As each time zone is 1 hour apart, we could expect that in the world there were 24 times zones, however several time zones are separated by 30 and 45 minutes, so the total number of time zones is 40.
+
+<h3>A bit of history</h3>
+The apparent position of the Sun in the sky is different depending on the location due to the spherical shape of the Earth. 15 degrees of longitude corresponds to 60 minutes of time. So when it is solar noon in Berlin which is 13.4 degrees east, it is about an hour before solar noon in London, located at the same latitude and 0 degrees of longitude.
+<p>
+The <a href=https://www.rmg.co.uk/royal-observatory>Royal Observatory</a> established the Greenwich Mean Time (GMT), the solar time at that location (Greenwich, London) as a way of reference to sailors to calculate their current longitude, knowing the difference between the time on board, which was the solar time at that location, and the Greenwich Mean Time kept by portable timekeepers.
+<p>
+The Coordinated Universal Time or UTC was established in 1960 and it is the successor to Greenwhich Mean Time. It is defined as the mean solar time at 0 degrees longitude. Since then, GMT is no longer a time standard but a time zone, although both share the same current time and are sometimes used incorrectly as synonims. UTC is also known as Zulu time or simply Z. 
+<p>
+Conversion between time zones can be calculated by adding and subtracting the corresponding offset to UTC. So, for example:<br>
+Time in LA = Time in NY - (UTC offset in NY) + (UTC offset in LA) = 23:59 - (-05:00) + (-08:00) = 20:59
+<p><div align=center>
+<a href=https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Standard_time_zones_of_the_world_%282012%29.svg/1280px-Standard_time_zones_of_the_world_%282012%29.svg.png>
+<img src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Standard_time_zones_of_the_world_%282012%29.svg/1280px-Standard_time_zones_of_the_world_%282012%29.svg.png width=70% border=0></a><br><font size=-1>Time Zones in the World (Source: Wikipedia)</font>
+</div>
+
+
+<h3>Daylight Saving Time</h3>
+
+Daylight Saving Time (DST) is the practice of moving the clock forward one hour during summer so that sunset occurs at a later time, observerd by some countries and sometimes only in certain regions of countries. DST is also know as summer time.
+<p>
+Standard time is the local time of a country or region when Daylight Saving Time is not used. It is sometimes referred to as winter time. By definition UTC never adjusts for daylight saving time.
+<p>
+In the image below, the countries that observe daylight saving time are colored in blue. Countries that previously used daylight saving time are colored in orange and countries that never used daylight savings are in red (Source: Wikipedia).
+<p><div align=center>
+<img src=https://upload.wikimedia.org/wikipedia/commons/2/29/DaylightSaving-World-Subdivisions.png width=70%></div>
+<p><br>
+
+<h3>Timestamps in files. Meteorological observations</h3>
+Computers generally set the date and time file attributes to local time. For the special case of weather observations, by convention they are taken in UTC, however some sensors and dataloggers can be configured to store the data in local time. 
+<br>
+In case the time zone at which some measurements were taken is ignored, there are several ways to find out. If the observations include temperature, a plot of the diurnal cycle of this variable can give a clue to the timestamp reference. Another way is by comparing the measurements against synthetic data. If the simulated data is available at different time zones, the best correlation between the observations and the model will always be for the matching time zone. Some wind energy related software even have a special feature to perform this test automatically.<p>
+The new <a href=https://interface.vortexfdc.com>Vortex interface</a> is designed to download all the calculations in any time zone. By default, the corresponding local time zone is selected. The time zones are in standard time, that is, excluding daylight time savings. In case the measurements are made in local time with summer and winter time, the timestamp for the summer time period must be changed first.<br>
+<p><div align=center>
+<img src=../vortex/img/interface2.png style="max-width:400px;width:75vw">
+</div>

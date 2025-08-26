@@ -1,0 +1,189 @@
+/* see https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+/* https://matthewjamestaylor.com/2-column-layouts */
+
+@font-face{
+font-family: 'Cantarell';
+ font-display: swap;
+ src: url(https://fonts.gstatic.com/s/cantarell/v17/B50NF7ZDq37KMUvlO015jKJu.ttf) format('truetype');
+}
+@font-face {
+ font-family: 'Fjalla One';
+ font-display: swap;
+ src: url(https://fonts.gstatic.com/s/fjallaone/v15/Yq6R-LCAWCX3-6Ky7FAFrOF6lw.ttf) format('truetype');
+}
+
+body {
+ font-family : 'Cantarell';
+ color: #777;  }
+
+
+
+
+
+table {
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #000;
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+}
+
+th {color: 000; border-bottom: 1px solid #000;} 
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}
+
+tr:first-of-type {
+  border-bottom: 1px solid black;
+}
+
+b { color: #000;}
+
+h1 { font-size: 300%; color: #000;}
+
+h2 { font-size: 200%; color: #000;}
+
+h3 { font-size: 150%; color: #000;}
+
+
+iframe{      
+        display: block;  /* iframes are inline by default */   
+        height: 100vh;  /* Set height to 100% of the viewport height */   
+        width: 100%;  /* Set width to 100% of the viewport width */     
+        border: none; /* Remove default border */
+        background: lightyellow; /* Just for styling */
+    }
+
+
+
+/* code */
+
+pre {
+  background: #111;
+  color: white;
+  font-family: monospace;
+  font-size: 120%;
+  text-align: left;
+  white-space: pre;
+  overflow-x: auto;
+  max-width: 80vw;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  
+  border-radius: .5em;
+  margin: .5em 0;
+  padding: 1em;
+}
+
+.container {
+    display: flex;
+    flex-flow: row wrap; /* we'll wrap */
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.header, .blog, .sidebar, .footer {
+    flex: 100%;
+}
+
+.header {
+    background: #f1f1f1;
+    text-align: center;
+}
+
+.sidebar {
+    #background: #f1f1f1;
+    #height: 100%;
+    #position: fixed;
+    #right: 0;
+    #margin-left: 100px;
+    #margin-top: 100px; 
+    padding: 25px;
+}
+
+
+
+.footer {
+    background: #c3c3c3;
+    padding: 10px;
+    text-align: center;
+}
+
+.blog {
+    background: #ffffff;
+    margin-right: 5vw;
+    margin-left: 5vw;
+    max-width: 1000px;
+}
+
+
+
+/* container */
+.padded-boxes {
+    display:flex;
+    flex-wrap:wrap;
+    gap:2rem;
+}
+
+/* boxes */
+.padded-boxes > * {
+    width:100%;
+    background:#eee;
+    border-radius:.4rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* headings */
+.padded-boxes .heading {
+    background:#c3c3c3;
+    margin:0;
+    padding:1rem;
+    border-top-left-radius:.4rem;
+    border-top-right-radius:.4rem;
+    text-align: center;
+    vertical-align: middle;
+    color: #000;
+}
+
+/* padded content */
+.padded-boxes .padded {
+    padding:.1rem 1rem;
+}
+
+
+a:link, a:visited { color: #000; text-decoration: none; font-weight: 900;}
+a:hover{ color: #3274d0; text-decoration: underline;}
+
+
+
+/* Large screens */
+@media all and (min-width: 800px) {
+  /* On bigger screens, sidebar now only gets 1/4 of space */
+  .blog { flex: 4 0px; }
+  pre {max-width: 800px;}
+  .sidebar { flex: 1 0px; min-width: 250px; margin-top: 150px; margin-right: 20px; border-left: 1px solid #c3c3c3;}
+  .padded-boxes > * {width:calc((100% - 4rem) / 2); }
+}
+
+
+/*Small screens */
+@media all and (max-width: 799px) {
+ .sidebar { background: #f1f1f1; border-top: 1px solid #888;}
+}
+

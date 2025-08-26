@@ -1,0 +1,15 @@
+<p><strong>Why if you draw a polygon in a OpenStreetMap has a different size than in Google Earth?</strong></p>
+
+<p>The difference in size between a polygon drawn in OpenStreetMap and the same polygon in Google Earth can be attributed to the use of different map projections. 
+
+<span style="font-style: inherit; font-weight: inherit; background-color: var(--ast-global-color-5);">Map projections are mathematical transformations that depict the Earth&#8217;s curved surface on a flat map. The Earth is a three-dimensional object, but maps are two-dimensional representations. Different projections aim to balance various properties like shape, area, distance, and direction.</span></p>
+
+<p><strong>Google Earth</strong> uses a coordinate system on the curved surface of a Geoid (WGS84). The latitude longitude coordinate system based on the Earth's center of mass is known as EPSG:4326 (European Petroleum Survey Group) This geodetic dataset is also used by the Global Positioning System. </p>
+
+<p>On the other hand, <strong>OpenStreetMap</strong> (and all the Leaflet library mapping applications) utilizes the EPSG 3857 projection, also known as <strong>Web Mercator</strong>. This is a projected coordinate system that maps the Earth&#8217;s surface onto a flat plane. Web Mercator is widely used for web mapping applications due to its compatibility with online tile-based maps.</p>
+
+<p>When you <strong>draw a polygon on a map in OpenStreetMap</strong>, it uses the projected EPSG 3857 coordinates, which results in the polygon being <strong>distorted in terms of shape and area as you move towards the poles</strong>. However, since Google Earth uses the unprojected EPSG 4326 coordinates, the polygon retains its original shape and area without any distortions.</p>
+
+<p>Therefore, <strong>when comparing the size of a polygon between OpenStreetMap/Leaflet and Google Earth, you will observe differences because the two systems use different map projections.</strong> It&#8217;s essential to consider the inherent distortions associated with each projection when interpreting and comparing spatial features across different mapping platforms.</p>
+
+<p>Understanding the differences in map projections is crucial for wind resource assessors when requesting modeled wind resource maps. This information helps them accurately interpret and compare spatial features. By considering the inherent distortions associated with each projection. wind resource assessors can make more informed decisions and ensure the reliability of their assessments.</p>

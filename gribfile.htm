@@ -1,0 +1,67 @@
+<html>
+        <title>VORTEX: What is a .GRIB extension file?</title>
+        <meta name="keywords" content="GRIB extension file, WMO, octet, byte, bit, ecCodes, GRIB-API, grib_ls, cdo, binary, GRIB edition 1, GRIB edition 2, reanalysis, Grid, NCL, NCAR, ECMWF, Metview">
+<body>        
+<h1>
+What is a GRIB file?
+        </h1>
+GRIB stands for General Regularly-distributed Infomation in Binary form. It is a data format used in meteorology to store weather data. It was first defined in 1985 by the World Meteorological Organization (WMO).<br> GRIB files were designed to exchange and store large volumes of gridded data and are used in Numerical Prediction models such as Weather Research Forecast (WRF) model, in reanalyisis data (ERA5 and CFSR) and in forecast data, such as the NOOA Global Forecast System (GFS) or the ECMWF Integrated Forecasting System (IFS).<br>
+GRIB files are machine independent and requires software for encoding and decoding.
+ 
+
+<h3>How to read a GRIB file?</h3>
+A binary file has its information stored in ones and zeros, that means if we try to open the file with a text editor such as the Notepad we won't be able to read any information. On the other hand, this type of format provides a faster access to the data and uses less memory than a plain text format.<br>
+
+GRIB files are collection of self-defining messages. Each message contains several sections: 
+<ul>
+<li>Indicator 
+<li>Product definition
+<li>Grid description
+<li>Bit map 
+<li>Binary data 
+<li>End of message coded with "7777" 
+</ul>
+Each message stands alone as meaningful data so a file may contain one or more GRIB messages. Collections of GRIB messages can be appended to each other.<br>
+Currently there are two different coding standards: GRIB edition 1 and GRIB edition 2. The major differences are in the structure of the messages. 
+
+<h3>Software:</h3>
+There are several tools to operate with GRIB files. Most popular command-line applications are: <ul>
+<li><a href=https://www.ncl.ucar.edu/>NCAR Command Language (NCL)</a> An interpreted language designed by the National Center for Atmospheric Research (NCAR).
+<li><a href=https://code.mpimet.mpg.de/projects/cdo>Climate Data Operators (CDO)</a>. A package developed by the Max-Planck-Institute for Meteorology 
+<li><a href=https://confluence.ecmwf.int/display/ECC>ecCodes (previously GRIB-API)</a> developed by European Center for Medium-range Weather Forecast (ECMWF)
+</ul>
+There are also some graphical visualization packages such as ArcGIS, GrADS, Panoply and Metview.
+
+<h3>Examples of operations with GRIB files:</h3>
+<pre>
+# Dump the content of a GRIB file 
+grib_dump input.grb
+
+# List the content of a GRIB file 
+grib_ls -n parameter input.grb
+
+# Select U wind component     
+grib_get_data -w shortName=u input.grb      
+
+# Select the fields at 100 hPa level 
+grib_copy -w level=100 input.grb output.grb
+
+# Find the nearest grid point at latitude 41.4 and longitude 2.2 
+grib_ls -l 41.4,2.2 input.grb
+
+# Select a region defined by two latitudes [41.4, 42.5] and two longitudes [1.5, 2.2] 
+cdo -s sellonlatbox,1.5,2.2,41.4,42.5 input.grb output.grb
+
+# Look up data values for a location [41.4,2.2] and time [20210903 08:00]  
+grib_ls -l 41.4,2.2,1 -w dataDate=20210903,dataTime=0800 -p shortName input.grib
+cdo -outputtab,lon,lat,date,time,value -selyear,2021 -selmonth,09 -selday,03 -seltime,08:00 -remapnn,lon=2.2_lat=41.4 input.grb
+
+# Open a GRIB file in NCL
+f = addfile("input.grb","r")
+print(f) 
+
+# Convert a GRIB file to NetCDf file
+cdo -f nc copy file.grb out.nc 
+grib_to_netcdf -o out.nc file.grb
+</pre>
+<p><br><p>

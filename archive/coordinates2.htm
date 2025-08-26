@@ -1,0 +1,145 @@
+<html>
+	<title>VORTEX: About Geographic coordinates</title>
+	<meta name="keywords" content="Cartography, World Geodetic System, WGS84, GPS, Latitude, Longitude, Geographic Coordinates, Mercator, UTM, Projection, Geoid, Ellipsoid, datum, Tissot Indicatrix, easting, northing, zone, location, position, GDAL, EPSG">
+	<body leftmargin=50 topmargin=50 rightmargin=100>
+	<h1>
+An introduction on geographic coordinates.
+	</h1>
+	Nowadays, anybody with a smartphone can know his exact position with just one click. Any location is determined by a specific pairing of <b>latitude</b> and <b>longitude</b> in a Cartesian coordinate ellipsoid-based grid.<br>
+	The actual shape of the Earth is an irregular figure called <b>Geoid</b> but can be approximated (at the sea level) to a mathematical <b>ellipsoid</b> called <b>datum</b>.<br>
+The more recent and precise version of global datum is the World Geodetic System <b>WGS84</b> (established in 1984 and revised in 2004) but there are also some local datums like the European ED50.<br>
+
+
+
+	<h3>
+		What is a map projection?
+	</h3>
+	<table border=0 width=90%><tr><td width=70%>
+Although some <a href=https://en.wikipedia.org/wiki/Modern_flat_Earth_societies target=_blank>people</a> today still have it backwards, our planet is not flat, so any attemp to represent the Earth on a plane needs some kind of transformation, knowed as map projection.<br>
+	In this process, there is always a compromise between the properties that get preserved and others that get deformed, therefore any map projection has always some kind of distortion. Based on the purpose of the map, it would be more useful to adopt some projection and avoid others. The <b>Tissot's Indicatrix</b> is a plot that contains circles at grid intersections and shows how they vary due to distortion<br>
+	There are lots of different map projections that can be classified by two main criteria:
+<ul><li>By the <b><i>surface</i></b> used: <br>Depending on the surface onto which the globe is projected, map projections can be <b>cylindrical, conic</b> or <b>azimuthal</b> (uses a plane).</li>
+		<li>By the <b><i>property</i></b> preserved: <br>Depending on which metric is preserved, the projections can be <b>equal-area, equidistant</b> or <b>conformal</b> (preserve angles).</li></ul>
+One of the most common projections used in the Wind Energy industry is the Universal Transverse Mercator (UTM).
+			</td>
+		 <td><img src=Tissot_mercator.png width=300><br><font size=2>Tissot's Indicatrix for Mercator projection</font></td>
+		</tr></table>
+
+
+<h3>The Universal Transverse Mercator (UTM) projection:</h3>
+<table width=90% border=0><tr><td width=50% valign=top>
+			The Mercator map projection was created by Gerardus Mercator in 1569. This projection is cylindrical and conformal, so local angles are preserved and local circles are not deformed. Distortion is constant along any parallel and constant bearings (rhumb lines) are straight lines. Map extends infinitely North and South. This is the projection used in Google Maps and by extension, all the websites feed by them, like  <a href=http://interface.vortex.es>Vortex interface</a><p>
+
+The Universal Transverse Mercator however, is not a single map projection but a system that divides the Earth into sixty zones, each being a six-degree band of longitude (numbered from 01 to 60, West to East). These bands are divided in cells of eight-degree high of latitude (specified by a letter from A to X, South to North, being N the first letter north to the Equator.)<p>
+
+A position on the Earth is given by the UTM <b>zone number</b> and the <b>easting</b> (x Cartesian coordinate) and <b>northing</b> (y coordinate) in that zone. 
+		</td>
+		<td><a href=Utm-zones.jpg><img src=Utm-zones.jpg width=600 border=0></a><br><center><font size=2>The zones in the Universal Transverse Mercator system</font></td></tr></table>
+
+
+
+<H3>How to convert UTM Geographic Coordinates (and viceversa):</H3>
+UTM coordinates can be transformed to geographical coordinates by using several mathematical equations. For brevity purposes, these formulaes are not reproduced here but can be looked up at the <a href=https://link.springer.com/article/10.1007%2Fs00190-011-0445-3>Journal of Geodesy</a>.
+
+For the sake of convenience, the form below calls a JavasCript code (thanks to <a href=http://home.hiwaay.net/~taylorc/>Chuck Taylor</a>) that solve these equations. Geographic coordinates are entered and displayed in decimal degrees. Negative numbers indicate West longitudes and South latitudes. UTM coordinates are entered and displayed in meters. The ellipsoide model used for computations is WGS84.<p>
+
+<script type="text/javascript" src="utm2latlon.js"></script>
+
+<!-- Not really a script, but a message for non-JavaScript browsers -->
+<SCRIPT TYPE="text/javascript">
+
+    <!-- -->  <HR>
+    <!-- -->  <P ALIGN=center><STRONG>Your browser does not appear to
+    <!-- -->  support JavaScript.
+    <!-- -->  <BR>Unfortunately, this form will not be useful to you
+    <!-- -->  without a browser that supports JavaScript.</STRONG></P>
+    <!-- -->  <HR>
+
+    <!--
+    if (0 < navigator.userAgent.indexOf ("Opera/3")) {
+        document.write ("<HR><P ALIGN=center><BIG>Opera 3.x"
+            + " Warning</BIG></P>");
+        document.write ("<P>Versions 3.0 through 3.51 of the Opera Web"
+            + " browser contain flaws that prevent the hemisphere"
+            + " indication and designation from working properly."
+            + " It is recommended that you use another browser to"
+            + " view and use this page.<HR>");
+    }
+    //    -->
+
+</SCRIPT>
+
+
+<DIV CLASS="center">
+<FORM NAME="frmConverter" onSubmit="0">
+<TABLE BORDER=0>
+
+<!-- Header row -->
+<TR>
+<Td COLSPAN=2 ALIGN=center>Geographic<BR>(<EM>degrees decimal</EM>)</TH>
+<Td ALIGN=center>To/From</TH>
+<Td COLSPAN=2 ALIGN=center>UTM</TH>
+</TR>
+
+<!-- Easting row (plus command button) -->
+<!-- The size attribute for the button input keeps the control
+     from looking too bad on browsers that don't support buttons
+     (even though the control is useless in this case).
+     The &gt; code is used for browsers that will interpret the
+     first right angle bracket in the VALUE field as the tag
+     terminator. -->
+<TR>
+<TD ALIGN=right>lon</TD>
+<TD><INPUT TYPE=text SIZE=15 NAME="txtLongitude" VALUE=""></TD>
+<TD ALIGN=center><INPUT TYPE=button SIZE=4 NAME=btnToUTM VALUE="&gt;&gt;"
+    onClick="btnToUTM_OnClick ()"> </TD>
+<TD ALIGN=right>x (easting)</TD>
+<TD><INPUT TYPE=text SIZE=15 NAME="txtX" VALUE=""></TD>
+</TR>
+
+
+<!-- Northing row (plus command button) -->
+<TR>
+<TD ALIGN=right>lat</TD>
+<TD><INPUT TYPE=text SIZE=15 NAME="txtLatitude" VALUE=""></TD>
+<TD ALIGN=center><INPUT TYPE=button SIZE=4 NAME=btnToGeographic VALUE="<<"
+    onClick="btnToGeographic_OnClick ()"></TD>
+<TD ALIGN=right>y (northing)</TD>
+<TD><INPUT TYPE=text SIZE=15 NAME="txtY" VALUE=""></TD>
+</TR>
+
+
+<!-- UTM zone row -->
+<TR>
+<TD COLSPAN=3></TD>
+<TD ALIGN=right>zone</TD>
+<TD><INPUT TYPE=text SIZE=4 NAME="txtZone" VALUE=""></TD>
+</TR>
+
+
+<!-- Hemisphere row -->
+<TR>
+<TD COLSPAN=3></TD>
+<TD COLSPAN=2>
+    hemisphere                                 
+    <!-- OnClick properties circumvent a Netscape bug that reverses
+         the indices of the buttons -->
+    <INPUT TYPE=radio NAME="rbtnHemisphere" VALUE="N" CHECKED OnClick="0">N
+    <INPUT TYPE=radio NAME="rbtnHemisphere" VALUE="S" OnClick="0">S
+</TD>
+</TR>
+</TABLE>
+</FORM>
+
+<p>
+Another way to transform geographic coordinates to UTM is by using the Geospatial Data Abstraction Library (<a href=https://www.gdal.org/>GDAL</a>). This <a href=link Oriol?>Open Source</a> library can transform any coordinate system referenced to any datum. A couple of UTM coordinates (utmx, utmy) can be converted to a geographical latitude and longitude by typing:
+
+<pre>
+> gdaltransform -s_srs EPSG:ZONE -t_srs EPSG:4326
+utmx utmy
+</pre>
+
+Where the parameter ZONE depends on the UTM zone and can be obtained from <a href=http://spatialreference.org target=_blank>http://spatialreference.org</a>
+
+<p><center><br><p>
+	<font size=2>2019 &copy; Vortex </font>

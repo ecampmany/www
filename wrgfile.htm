@@ -1,0 +1,101 @@
+<html>
+        <title>VORTEX: What is a .WRG extension file?</title>
+        <meta name="keywords" content="WRG extension file, WaSP, DTU, byte, bit, wind, ASCII, Wind Resource Grid, WRB, binary">
+
+<head>
+<style>
+table, td, th {
+  border: 1px solid black;
+}
+table, th, td {
+    border-collapse: collapse;
+}
+td{
+    border:1px solid black;
+    border-top: none;
+    border-bottom: none;
+}
+
+/*pre code {
+#  background-color: #eee;
+  border: 1px solid #999;
+  display: block;
+  padding: 10px;
+  overflow: scroll;
+}
+*/
+</style>
+</head>
+        <body>
+        <h1>
+What is a WRG file?
+        </h1>
+WRG stands for Wind Resource Grid and it was first introduced by the Ris&oslash; National Laboratory (since 2008, the Technical University of Denmark, DTU). <br>WRG files are the outputs of the Wind Atlas Analysis and Application Program (WAsP by DTU) and nowadays are also produced by Vortex and other companies. <br>
+Several tools can read and import WRG files like OpenWind, WindFarmer and WindPro.<p>
+<br>      
+
+<p>
+<h3>Example:</h3>
+
+<code>
+<pre>
+  131 143 498153 4261720 100
+GridPoint     498153   4261720       0   30  6.7  1.76            567 16  39  47  172  31  41  162  32  53  131  63  83  174 143  92  230 142  79  228  65  62  189  34  51  158  30  54  155  29  54  147  32  46  177  46  51  177  99  71  226  83  64  195  74  59  178  58  51  194
+GridPoint     498253   4261720       0   30  6.7  1.75            566 16  39  46  173  31  41  163  33  53  130  64  84  177 144  91  229 141  79  227  65  62  188  34  50  158  30  54  153  29  55  148  32  46  176  46  52  178  98  71  225  82  64  194  75  59  178  57  52  195
+GridPoint     498353   4261720       0   30  6.7  1.75            565 16  39  46  173  31  41  164  33  54  129  66  84  176 144  91  228 140  78  227  64  62  189  34  50  158  30  54  153  29  55  148  33  46  174  46  52  181  98  71  224  82  64  194  75  59  177  57  52  197
+GridPoint     498453   4261720       0   30  6.7  1.75            564 16  40  46  173  31  41  164  33  55  130  68  84  175 145  91  227 138  78  228  64  61  190  34  50  159  30  54  153  29  55  149  33  46  174  46  52  181  97  71  223  81  64  194  75  59  178  57  52  197
+GridPoint     498553   4261720       0   30  6.6  1.75            562 16  41  46  174  31  41  165  34  55  128  69  84  176 145  91  228 137  78  228  64  61  192  33  50  160  30  53  151  29  55  149  32  45  174  45  52  181  97  70  223  81  64  194  75  58  179  57  51  197
+GridPoint     498653   4261720       0   30  6.6  1.75            560 16  41  46  177  31  41  163  35  54  128  69  85  178 145  91  229 137  78  226  63  61  192  34  50  160  30  53  151  29  54  148  32  46  176  45  51  179  96  70  221  81  63  194  75  58  179  57  51  196
+GridPoint     498753   4261720       0   30  6.6  1.75            559 16  41  46  179  31  41  162  35  55  129  71  85  179 145  91  230 137  77  225  63  61  192  33  50  161  30  54  154  29  54  146  31  46  176  45  51  180  96  70  219  81  63  193  74  59  179  57  51  197
+GridPoint     498853   4261720       0   30  6.6  1.74            560 16  41  46  179  31  41  161  36  55  131  72  86  181 145  91  229 135  77  225  63  61  192  33  50  160  30  54  155  29  53  145  31  46  175  45  51  179  96  70  218  80  63  193  75  58  179  57  51  195
+GridPoint     498953   4261720       0   30  6.6  1.74            560 16  41  45  178  30  41  162  36  56  132  74  86  182 146  91  229 134  77  225  63  61  192  33  50  160  30  54  156  30  53  145  31  46  174  45  51  178  95  70  218  80  63  193  74  58  180  58  51  194
+...
+</code>
+</pre>
+<p><br>
+
+<h3>File structure:</h3>
+The Wind Resource Grid file is an ASCII (text) file. <br>The first line contains the coordinates, height above ground level, the number of grid points (X and Y) and the cell size. <br>Then contains the wind rose and sector-wise wind speed distributions for each node in the grid. The detailed format of each line is shown in the table below.<p>
+<table border=1 cellpadding=15>
+<tr><th> Line </th><th>Content</th></tr>
+<tr><td> 1 </td><td>N<sub>x</sub> N<sub>y</sub> X<sub>min</sub>Y<sub>min</sub> {cell size} <br>
+
+N<sub>x</sub> is the number of grid points in the X-direction <br>
+N<sub>y</sub> is the number of grid points in the Y-direction <br>
+X<sub>min</sub> is the X-coordinate of the lower left corner (node) of the grid [m] <br>
+Y<sub>min</sub> is the Y-coordinate of the lower left corner (node) of the grid [m] <br>
+{cell size} is the regular resource grid cell size [m]
+
+</td></tr>
+<tr><td> 2 </td><td>Results for node 1</td></tr>
+<tr><td> 3 </td><td>Results for node 2</td></tr>
+<tr><td> ... </td><td> ... </td></tr>
+<tr><td> n </td><td>Results for node n</td></tr>
+</table>
+<p>
+For each line, the format in columns is shown in the next table. The format is fixed, each value must be in the specified field with the fixed width.
+<p>
+<table border=1 cellpadding=15>
+<tr><th> Column </th><th>Width</th><th>Contents</th></tr>
+<tr><td>01-10 </td><td>10</td><td>Text string (10 characters) identifying the site/grid point</td></tr>
+<tr><td>11-20 </td><td>10 </td><td>X-coordinate (easting) of the site [m] </td></tr>
+<tr><td>21-30 </td><td>10 </td><td>Y-coordinate (northing) of the site [m] </td></tr>
+<tr><td>31-38 </td><td>8 </td><td>Z-coordinate (elevation) of the site [m] </td></tr>
+<tr><td>39-43 </td><td>5 </td><td>Height above ground level [m a.g.l.] </td></tr>
+<tr><td>44-48 </td><td>5 </td><td>Weibull A-parameter for the total distribution [ms<sup>-1</sup>] </td></tr>
+<tr><td>49-54 </td><td>6 </td><td>Weibull k-parameter for the total distribution </td></tr>
+<tr><td>55-69 </td><td>15 </td><td>Power density [Wm-2] or power production [Why<sup>-1</sup>] </td></tr>
+<tr><td>70-72 </td><td>3 </td><td>Number of sectors </td></tr>
+<tr><td>73-76 </td><td>4 </td><td>Frequency of occurrence for sector #1 [%&#183;10] </td></tr>
+<tr><td>77-80 </td><td>4 </td><td>Weibull A-parameter for sector #1 [ms<sup>-1</sup>&#183;10]  </td></tr>
+<tr><td>81-85 </td><td>5 </td><td>Weibull k-parameter for sector #1 [&#183;100] </td></tr>
+<tr><td>86-98 </td><td>13 </td><td>As columns 73-85, but for sector #2 ... </td></tr>
+<tr><td>... </td><td>... </td><td> ...</td></tr>
+<tr><td>216-228 </td><td>13 </td><td>As columns 73-85, but for sector #12 ... </td></tr>
+</table>
+<br><p>
+
+<h3>References:</h3>
+Mortensen, N. G., Heathfield, D. N., Rathmann, O., & Nielsen, M. (2011). Wind Atlas Analysis and Application Program: WAsP 10 Help Facility. Roskilde: DTU Wind Energy.
+<p><br>
+
