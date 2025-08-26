@@ -1,1 +1,2 @@
-archive/
+# Avoid Desktop Service
+.DS_Store
