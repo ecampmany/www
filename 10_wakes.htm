@@ -1,0 +1,46 @@
+<html>
+<title>Wakes and Blockage</title>
+<meta name="keywords" content="Wind Resource, Wind Energy, AEP, Energy Yield Analysis, Wakes, Blockage, Turbines, Wind Farm, Wind Park, Offshore"> 
+<body>
+<h1>Wakes and Blockage</h1>
+Since DNV published the consequences of neglecting blockage and its impact on energy production <a href=#1>[1]</a> and Orsted presented the update of its long-term finantial target taking into account the blockage and wake effects <a href=#2>[2]</a>, these two effects have become one of the hottest topics in the wind industry. The recent Wind Europe Workshop held in Dublin dedicated two sessions on this topic <a href=#3>[3]</a>.
+
+<h2>Wake effect</h2>
+The wakes effect refers to the phenomenon where wind turbines create a region of slower wind speeds and increased turbulence downstream from their rotor blades. As wind passes through a turbine, some of its kinetic energy is converted into mechanical energy for electricity generation, resulting in a reduction in wind speed behind the turbine. This disturbed area, known as the wake, not only experiences reduced wind speeds but also increased turbulence.
+<p>
+This effect can impact the efficiency and energy output of turbines located downwind, as they receive less kinetic energy from the wind. The increased turbulence within the wake can cause additional mechanical stress on these downstream turbines, potentially leading to higher maintenance needs and a shorter operational lifespan.
+<p>
+Because of these impacts, the wake effect is a crucial consideration in the design and layout of wind farms. Proper spacing between turbines is necessary to minimize the negative effects on overall energy production and turbine durability. Additionally, in areas with multiple wind farms, the wake from one farm can influence the performance of neighboring farms, making comprehensive planning even more important.
+<h2>Blockage effect</h2>
+The blockage effect of a wind turbine refers to the disruption of airflow caused by the presence of the turbine, resulting in a decrease in wind speed and an increase in pressure upstream of the rotor. As wind approaches the turbine, it slows down due to the obstruction presented by the rotor, creating a high-pressure zone directly in front of the turbine. To conserve mass and momentum, some of the wind flow is diverted around the turbine, which can cause the wind speed to increase on the sides of the rotor.
+<p>
+This decrease in wind speed directly in front of the turbine, caused by the blockage effect, can influence turbine performance. The high-pressure zone in front of one turbine can impact the performance of neighboring turbines, particularly those situated directly upstream, affecting the overall layout and efficiency of wind farms. Understanding and mitigating the blockage effect is crucial for optimizing the efficiency of wind farms.
+<p>
+
+<p><br><p>
+<div align=center>
+<img src=../vortex/img/wakes.png width=70%></a>
+<br><font size=2> A scheme of the wake and blockage effect. The first turbine disrupts the air flow, so the second turbine will have lower power output and more turbulence. The blockage produces a deceleration of the flow upstream of the turbine.</font>
+</font></div><p><br>
+
+<h2>The Fitch scheme</h2>
+Computational Fluid Dynamics (CFD) tools provide detailed insights into the aerodynamic interactions between wind turbines and their environment, making them good candidates for studying the effects of wakes. However, they are not the only option. The <b>WRF model</b> includes a wind turbine drag parameterization scheme that represents sub-grid effects of specified turbines on wind and TKE fields: the Fitch Scheme <a href=#4>[4]</a>. 
+<p>In the <b>Fitch scheme</b>, wind turbines are modeled as sinks of momentum and sources of TKE. This parameterization does not consider the rotation of rotor blades, so it is not recommended for high-resolution simulations (higher than 3 times the rotor diameter). Therefore, it is useful in offshore sites, where the horizontal variability is smaller than in onshore sites, and for simulations with a spatial resolution of 1 km. 
+<p><br><p>
+<div align=center>
+<img src=../vortex/img/Fitch.png width=70%></a>
+<br><font size=2>
+Mean Wind Speed maps for the Regular simulation (left) and the Fitch Wakes simulation (right) for a 400 squared kilometers region where there is a wind farm. The Fitch Scheme decreases the predicted wind speed up to a 13% in the center of a wind farm.
+</font> </div><p><br>
+
+<br><p><br>
+<h3>References:</h3>
+<ol>
+
+<div id=1><li>J. Bleeg, ,M. Purcell R. Ruisi E. Traiger (2018):<i>Wind Farm Blockage and the Consequences of Neglecting Its Impact on Energy Production</i> <a href=https://doi.org/10.3390/en11061609>https://doi.org/10.3390/en11061609</a></div>
+<div id=2><li>Orsted (2019):<i>Ørsted presents update on its long-term financial targets</i> <a href=https://orsted.com/en/company-announcement-list/2019/10/1937002>https://orsted.com/en/company-announcement-list/2019/10/1937002</a></div>
+<div id=3><li>Wind Europe Technology Workshop 2024, 10-11 June,Dublin <a href=https://windeurope.org/tech2024/programme/>Speaker Session Programme</a>
+<div id=4><li>Fitch, A. C., J. B. Olson, J. K. Lundquist, J. Dudhia, A. K. Gupta,
+J. Michalakes, and I. Barstad, (2012): <i>Local and mesoscale impacts of wind farms as parameterized in a mesoscale NWP model.</i> Mon. Wea. Rev., 140, 3017–3038, <a href=https://doi.org/10.1175/MWR-D-11-00352.1>https://doi.org/10.1175/MWR-D-11-00352.1</a>
+</ol>
+<br><p><br><p>

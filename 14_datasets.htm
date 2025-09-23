@@ -1,0 +1,103 @@
+<html>
+<title>Additional Datasets</title>
+<meta name="keywords" content="Wind Resource, Wind Energy, AEP, Energy Yield Analysis, Wakes, Blockage, Turbines, Wind Farm, Wind Park, Offshore, Turbulence, calibration"> 
+
+<style>
+#sides{
+margin:0;
+display: flex;
+flex-flow: row wrap; /* we'll wrap */
+}
+#left{
+float:left;
+width:50%;
+}
+#right{
+float:left;
+width:50%;
+} 
+
+#l-text{
+float:left;
+width:60%;
+}
+#r-plot{
+float:left;
+width:40%;
+}
+
+
+</style>
+
+<body>
+
+
+<h1>Additional datasets used in WRF simulations</h1>
+At Vortex we use WRF model to produce high-resolution wind estimations. The three atmopheric reanalysis (ERA5 from ECMWF, MERRA2 from NASA and CFSR from NCEP) provides meteorological variables as wind horizontal components, temperature, pressure, humidity, etc. which are used as initial and boundary conditions for our simulations. However, the model also requires additional datasets for execution, specifically topograpghy and roughness data.
+
+<h2>Topography</h2>
+All WRF calculations at Vortex use the <b>Shuttle Radar Topography Mission (SRTM)</b> provided by NASA. The Digital Elevation model covers all the world from 56 degrees South up to 60 degrees North. Multiple versions of the dataset exist at different resolution, Vortex uses <b>SRTM3</b> at 3-sec arc resolution which is equivalent to 90m along the equator. 
+<p>
+Voids in the original SRTM data were filled with ASTER Global Digital Elevation Model (GDEM) Version 2.0, the Global Multi-resolution Terrain Elevation Data 2010 (GMTED2010), and the National Elevation Data set (NED) to produce the final dataset <b>STRMGL3</b><p>
+
+For the polar regions where SRTM was no available, Digital Elevation Models from Viewfinder Panoramas (<a href=https://viewfinderpanoramas.org/dem3.html>https://viewfinderpanoramas.org/dem3.html</a>) were used. For the northern region, the main original sources were height contours from Russian military maps and Canadian Digital Elevation Data.
+<p><br><p>
+<div align=center>
+        <img src="../vortex/img/srtm.gif" width=60%><br>
+<font size=-1>SRTM color encoded shaded relief world topography. Credit: USGS</font>
+</div>
+<br><p>
+
+<h2>Land Use</h2>
+The WRF model requires land-use characterisation in order to account for a roughness length and reflectivity albedo. We use the dataset <b>Globcover</b> released by European Space Agency in 2010 was used as a source. <br>
+Globcover is a 300-m horizontal resolution global cover map. There are 22 different classes of land. The map was made using as input observations from the Medium Resolution Imaging Spectrometer (MERIS) sensor on board the ENVISAT satellite mission using two periods of coverage: December 2004 - June 2006 and January - December 2009.
+
+<p><br><p>
+<div align=center>
+        <img src="../vortex/img/globcover.jpg" width=60%><br>
+<font size=-1>GlobCover global composite. Credit: ESA </font>
+</div> 
+<br><p>
+
+<h2>Roughness length</h2>
+Land-use data can be converted into roughness length by assigning specific height values to each land-cover class. The 22 GlobCover land-use classes are mapped to 14 roughness length values, with all seven forest types grouped under a single roughness length value.
+<p>
+        The table below presents the roughness length values used, based on previous default NCAR WRF model equivalences and USGS land-use types. These equivalences were later adopted in the Global Wind Atlas, as compiled in different peer-reviewed papers [<a href=#ref1>1,2,3</a>]<p></p>
+
+
+<br><p><br>
+
+
+<table>
+<tr><th>Class Name</th>	<th>GlobCover Number</th>	<th>Modis Number</th>	<th>Roughness Length</th></tr>
+<tr><td>Water Bodies</td><td>	210 </td><td>	0	</td><td>0.0</td></tr>
+<tr><td>Permanant Snow and ice</td><td>	220</td><td>	15</td><td>	0.0004</td></tr>
+<tr><td>Bare areas</td><td>	200</td><td>	16</td><td>	0.005</td></tr>
+<tr><td>Grassland, savannas or lichens/mosses</td><td>	140</td><td>	10</td><td>	0.03</td></tr>
+<tr><td>Sparse vegetation</td><td>	150</td><td>	None</td><td>	0.05</td></tr>
+<tr><td>Croplands</td><td>	11, 14	</td><td>12</td><td>	0.1</td></tr>
+<tr><td>Shrubland</td><td>	130</td><td>	6, 7</td><td>	0.1</td></tr>
+<tr><td>Wetlands</td><td>	180</td><td>	11</td><td>	0.2</td></tr>
+<tr><td>Mosaic natural vegetation / cropland</td><td>	20, 30</td><td>	14</td><td>	0.3</td></tr>
+<tr><td>Flooded forest</td><td>	160</td><td>	None</td><td>	0.5</td></tr>
+<tr><td>Mosaic grassland / forest</td><td>	120</td><td>	9</td><td>	0.5</td></tr>
+<tr><td>Flooded forest or shrubland</td><td>	170</td><td>	None</td><td>	0.6</td></tr>
+<tr><td>Urban Areas</td><td>	190</td><td>	13</td><td>	1.0</td></tr>
+<tr><td>Forests</td><td>	40, 50, 60, 70, 90, 100, 110</td><td>	1, 2, 3, 4, 5, 8</td><td>	1.5</td></tr>
+</table>
+<br><p>
+        One limitation of this approach is that each land-use class is assigned a single roughness length value, which may not fully represent variations in vegetation density or terrain heterogeneity.        
+</p>
+
+
+<br><p><br>
+
+<h3>References:</h3>
+<ol>
+<a name=ref1></a>
+<li><b>Davis, Neil & Badger, Jake & Hahmann, Andrea & Hansen, Brian & Mortensen, Niels & Kelly, Mark & Larsén, Xiaoli & Olsen, Bjarke & Floors, Rogier & Lizcano, Gil & Casso, Pau & Lacave, Oriol & Bosch, Albert & Bauwens, Ides & Knight, Oliver & Loon, Albertine & Fox, Rachel & Parvanyan, Tigran & Hansen, Søren & Drummond, Ray </b> (2023) <i>The Global Wind Atlas: A High-Resolution Dataset of Climatologies and Associated Web-Based Application.</i> Bulletin of the American Meteorological Society. 104. <a href=" https://doi.org/10.1175/BAMS-D-21-0075.1"> https://doi.org/10.1175/BAMS-D-21-0075.1</a>  
+<li><b>Dörenkämper, M. et al </b> (2020)<i> The Making of the New European Wind Atlas – Part 2: Production and Evaluation.</i> <a href=https://doi.org/10.5194/gmd-2020-23>https://doi.org/10.5194/gmd-2020-23</a> 
+<li><b>R. Floors et al</b> (2021): <i>Satellite-based estimation of roughness lengths and
+displacement heights for wind resource modelling</i> Wind. Energ. Sci., 6, 1379-1400. <a href=https://doi.org/10.5194/wes-6-1379-2021 >https://doi.org/10.5194/wes-6-1379-2021</a> 
+</ol>
+<br><p><br><p>
