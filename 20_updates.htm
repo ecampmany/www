@@ -1,0 +1,79 @@
+<html>
+<title>Vortex Time Series Updates</title>
+<meta name="keywords" content="Vortex, Time Series, Updates, CFSR, MERRA-2, ERA5, Reanalysis, Data Availability, NCEP, NASA, ECMWF">    
+<body>
+<h1>Vortex SERIES Updates</h1>
+One of the most common questions from Vortex users is how often time series can be updated and why different datasets become available at different times.
+Vortex generates time series using three global reanalysis datasets: CFSR, MERRA2, and ERA5. These datasets are maintained by different institutions and follow different publication schedules. As a result, the availability of the most recent data varies from one dataset to another.
+<br><p></p>
+To make the process simple, Vortex allows users to update any long term time series (10, 20 or 30 years) free of charge once every <b>30 days</b>. After 30 days have elapsed since the last update, the <b>Update</b> button becomes available again in the interface. Any <b>remodeled</b> time series previously requested by the customer will be automatically updated when the <b>Update</b> button is clicked. 
+<br><p></p>
+Once the <b>Update</b> button is clicked, the process typically takes less than one hour if the series is only one month out of date. For series that are several months out of date, the update process may take longer. As our computing cluster tends to be busiest on the main update dates (the 1st and 8th of each month), processing times may increase due to higher demand. <br>
+If a user needs an update before the 30-day period has expired, they can simply contact the Vortex team, who can manually trigger the update.
+
+<p><div align=center>
+<img src="../vortex/img/updates.png" width=75%>
+<br><font size=2>Update button in Vortex interface is enabled once every 30 days for long term time series.</font>
+</div><p></p>
+
+
+<h3>CFSR</h3>
+
+The Climate Forecast System Reanalysis (CFSR) is produced by the National Centers for Environmental Prediction (NCEP), part of the U.S. National Oceanic and Atmospheric Administration (NOAA).
+
+CFSR data is updated daily by NCEP with approximately a one-day delay. Vortex processes these updates immediately, so CFSR-based time series are typically available with the same one-day delay.
+
+For example, on the 1st day of a new month, users can update their series and obtain the complete previous month.
+
+<h3>MERRA2</h3>
+
+The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA2) is produced by NASA's Global Modeling and Assimilation Office (GMAO).
+
+Unlike CFSR, MERRA2 is not updated daily. NASA generally releases a complete month of data between the 20th and 25th day of the following month. This means the effective delay is usually greater than 50 days.
+
+As a consequence, users typically need to wait until the first day of the second month after the target month before a complete monthly update becomes available.
+
+For example, complete data for January is usually available around the beginning of March.
+
+<h3>ERA5</h3>
+
+The ERA5 reanalysis is produced by the European Centre for Medium-Range Weather Forecasts (ECMWF) through the Copernicus Climate Change Service (C3S).
+
+ERA5 data is generally available with a five-day delay. However, due to its higher spatial and temporal resolution, Vortex requires approximately two additional days to process and integrate the new files.
+
+As a result, ERA5-based time series in Vortex are typically available with an overall delay of about eight days.
+
+This means that users can generally obtain a complete previous month around the 8th day of the following month.
+
+<h3>Summary</h3>
+
+<table>
+<tr>
+<th>Dataset</th>
+<th>Institution</th>
+<th>Delay</th>
+<th>Full Previous Month Available</th>
+</tr>
+<tr>
+<td>CFSR</td>
+<td>NCEP / NOAA</td>
+<td>1 day</td>
+<td>1st day of the following month</td>
+</tr>
+<tr>
+<td>MERRA2</td>
+<td>NASA</td>
+<td>1.5 months</td>
+<td>1st day of the second following month</td>
+</tr>
+<tr>
+<td>ERA5</td>
+<td>ECMWF</td>
+<td>8 days</td>
+<td>8th day of the following month</td>
+</tr>
+</table>
+
+<p></p>
+Understanding these publication schedules can help users plan their updates and ensure that the latest available data is included in their analyses.
+If you have any questions regarding the status of a specific time series or need an update before the 30-day period has elapsed, please contact the Vortex support team.</p>

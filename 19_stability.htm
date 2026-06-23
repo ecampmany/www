@@ -1,0 +1,159 @@
+<html>
+<title>Stability Variables in Vortex Time Series</title>
+<meta name="keywords" content="Stability, Turbulence, Richardson Number, Monin Obukhov, RMOL, NWP, WRF, model, resource assessment, stable">  
+<body>
+<h1>
+Stability Variables in Vortex Time Series
+</h1>
+Atmospheric stability describes the tendency of air parcels to move vertically in the atmosphere. It influences wind shear, turbulence intensity, momentum mixing, and ultimately wind turbine performance.
+<br>
+Unstable conditions promote strong vertical mixing, producing more uniform wind profiles and generally lower wind shear. Stable conditions suppress mixing, increasing wind shear and allowing wakes and turbulence structures to persist for longer distances.
+<br>
+Because stability directly affects wind resource assessment, energy production, and wake behaviour, Vortex SERIES and TIMES products provide two stability-related variables: the Bulk Richardson Number (RiNumber) and the inverse Monin-Obukhov Length (RMOL).
+
+<p><div align=center>
+<img src="../vortex/img/turbulence.png" width=75%>
+<br><font size=2>Illustration of thermal and mechanical turbulence (credit: Shutterstock).</font>
+</div><p></p>
+<p><br></p>
+
+<h3>Variables Provided</h3>
+<p>The following stability variables are included in Vortex SERIES and TIMES time series:</p>
+<ul>
+<li>RiNumber: bulk Richardson number, calculated from WRF fields</li>
+<li>RMOL (1/m): inverse Monin Obukhov length, directly available from WRF output</li>
+</ul>
+
+<p>Example rows from a time series file:</p>
+<pre>YYYYMMDD HHMM  M(m/s) D(deg)  T(C)  De(k/m3) PRE(hPa)      RiNumber  RH(%)   RMOL(1/m)
+19991231 1800    1.6    169    9.4    1.06     862.7           2.25   62.6      0.5342
+19991231 1900    1.4    187    9.1    1.06     862.4           4.93   60.9      0.8470
+19991231 2000    1.6    171    9.0    1.07     862.2           2.07   58.4      0.3648
+19991231 2100    2.7    155    9.1    1.06     861.9           0.90   52.9      0.2006</pre>
+
+<p class="small">We provide both variables because RMOL is directly output by WRF, while RiNumber can be computed from wind and temperature levels from WRF.</p>
+<p><br></p>  
+
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']]
+  }
+};
+
+</script>
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+
+
+
+<h3>Richardson Number</h3>
+The Richardson Number compares two competing processes in the atmosphere:
+<ul>
+<li> Buoyancy forces, which tend to suppress or enhance vertical motion depending on the temperature stratification.
+<li> Mechanical shear, which tends to generate turbulence through wind speed differences between levels.
+</ul>
+In simple terms:
+<ul>
+<li> Negative values indicate unstable conditions and active vertical mixing.</li>
+<li> Values near zero indicate neutral conditions.</li>
+<li> Positive values indicate stable conditions.</li>
+<li> Large positive values indicate strongly stable conditions where turbulence generation becomes limited.</li>
+</ul>
+
+This makes the Richardson Number a useful indicator of the balance between thermal and mechanical effects in the atmospheric boundary layer.
+<p>
+RiNumber is computed using the bulk Richardson formulation described by Stull [Reference: <a href="https://books.google.es/books?id=eRRz9RNvNOkC&pg=PA177" target="_blank">An Introduction to Boundary Layer Meteorology</a>]
+<p>
+<b>Level definition around requested height</b>
+<ul>
+<li>Subscript 0: requested height minus 10 m</li>
+<li>Subscript 1: requested height</li>
+<li>Subscript 2: requested height plus 10 m</li>
+</ul>
+
+<p>
+This means Ri can be computed from two surrounding WRF levels (lower and upper, around the requested level), with temperature at the requested level in the denominator.
+</p>
+<b>Potential temperature correction</b>
+<div class="math">
+$$T = t + 0.0098 \cdot h + 273.15$$
+</div>
+
+<p>Applied at each level:</p>
+<div class="math">
+$$T_0 = Temp_0 + 0.0098h_0 + 273.15$$
+$$T_1 = Temp_1 + 0.0098h_1 + 273.15$$
+$$T_2 = Temp_2 + 0.0098h_2 + 273.15$$
+</div>
+<p><br></p>  
+
+
+<b>Bulk Richardson number used in Vortex</b>
+<div class="math">
+$$Ri = 9.81 \cdot \frac{(h_2-h_0)(T_2-T_0)}
+{T_1\left[(u_2-u_0)^2 + (v_2-v_0)^2\right]}$$
+</div>
+<p class="small">
+Note: if wind differences between upper and lower levels are very small, the denominator can become small and Ri can become very large.
+</p>
+<p><br></p>  
+
+<h3>Monin-Obukhov Length (RMOL)</h3>
+
+<p>
+The Monin-Obukhov Length (L) is one of the most widely used stability parameters in boundary-layer meteorology. It represents the height at which buoyancy forces become as important as mechanical turbulence production.
+</p>
+
+<ul>
+<li>Negative L indicates unstable conditions.</li>
+<li>Positive L indicates stable conditions.</li>
+<li>Large values of |L| correspond to near-neutral conditions.</li>
+</ul>
+<p>Because L can vary from a few metres to several kilometres, WRF outputs its inverse (1/L), reported in Vortex time series as RMOL:
+</p>
+<div class="math">$$RMOL = \frac{1}{L}$$</div>
+<ul>
+
+<li>RMOL &lt; 0 → unstable atmosphere</li>
+<li>RMOL ≈ 0 → neutral atmosphere</li>
+<li>RMOL &gt; 0 → stable atmosphere</li>
+</ul>
+
+<p>
+Large absolute values indicate increasingly unstable or stable conditions.
+</p>
+
+<p>In Vortex, we use an empirical relationship between Ri and Monin Obukhov length:</p>
+
+<div class="math">
+$$\frac{z}{L} = -\frac{Ri}{6}
+\quad \text{for stable conditions } (Ri > 0.25)$$
+$$\frac{z}{L} = Ri
+\quad \text{for unstable conditions}$$
+</div>
+
+<p class="small">where z is the requested height above ground level and L is the Monin-Obukhov length.</p>
+<p><br></p>
+
+<h3>Stability Classification</h3>  
+For reporting purposes, Richardson Number values can be grouped into qualitative stability classes. These categories provide an intuitive way to summarize the atmospheric conditions experienced at a site over long periods.
+<br>
+While the exact thresholds vary slightly among studies, the classification below is commonly used in wind resource assessment and follows the Bulk Richardson Number approach implemented in Vortex SERIES.<p>
+
+<table aria-label="Ri stability classes">
+<tr><th>Class</th><th>Ri range</th></tr>
+<tr><td>Very Unstable</td><td>$Ri &lt; -5$</td></tr>
+<tr><td>Unstable</td><td>$-5 &lt; Ri &lt; 0$</td></tr>
+<tr><td>Neutral</td><td>$0 &lt; Ri &lt; 0.25$</td></tr>
+<tr><td>Stable</td><td>$0.25 &lt; Ri &lt; 1$</td></tr>
+<tr><td>Very Stable</td><td>$1 &lt; Ri$</td></tr>
+</table>
+
+
+</body>
+</html>

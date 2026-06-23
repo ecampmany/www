@@ -1,0 +1,132 @@
+
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../vortex/style.css" rel="stylesheet">
+<title>Vortex Icing</title>
+<meta name="keywords" content="Wind, Icing, Wind Energy, Wind Turbines, Wind Power, Renewable Energy, Makkonen, Thompson">
+</head>
+
+<body>
+<h1>Icing Product</h1>
+Wind farms in cold climates face a unique challenge: <b>icing</b>. When temperatures drop below freezing,
+moisture in the air can freeze onto turbine blades, altering their shape and weight. This reduces aerodynamic
+efficiency and can also lead to mechanical issues and safety risks. Accurate <b>icing calculations</b> are essential
+for designing turbines that can operate in harsh conditions and for planning maintenance to minimise downtime.
+</p>
+
+<h2>Methodology</h2>
+
+<p>
+Vortex Icing allows to quantify the meteorological icing phase during which atmospheric conditions are favourable for ice accretion.
+During this phase, ice accumulates on infrastructures, such as sensors and turbine blades.
+</p>
+
+<p>
+First, Vortex runs a 10-year hourly time-series simulation with the WRF model at 3-km horizontal resolution
+to identify cold periods with potential icing conditions, based on a temperature threshold.
+</p>
+
+<p>
+Once these periods are detected, a second simulation is run at higher spatial resolution (1 km), focused on
+the potential icing days. This simulation uses a microphysics scheme that better represents cloud properties
+relevant for icing, especially the <b>qcloud</b> variable (Thompson scheme), which allows to identify and filter better the most humid days. From this high-resolution simulation, we determine the candidate icing periods which are cold and humid days.
+</p>
+
+<p>
+For this subset of days, we run a FARM simulation at 100-m resolution covering the domain defined by the user.
+This FARM provides a more accurate wind-speed estimation for the Makkonen icing model, as well as qcloud values needed to compute the icing accretion rate (<b>dmdt</b>).
+</p>
+
+<p>
+The model assumes that icing occurs when supercooled cloud droplets impact a cold surface and freeze. Three factors control the process: the collision efficiency (how many droplets actually hit the blade), the accretion efficiency (how much of the collected water freezes and remains attached), and the freezing fraction (how the heat balance affects immediate freezing). In simplified form, the icing rate is expressed as:
+</p>
+<div style="margin:10px 0; font-family:monospace;">
+dm/dt = α · β · ρ<sub>w</sub> · M · LWC  
+</div>
+<p>
+where dm/dt is the ice-accretion rate, α the collision efficiency, β the accretion efficiency, ρw the density of water, M the wind speed, and LWC the liquid water content (derived from the WRF qcloud variable). In practice, colder temperatures increase sticking efficiency, stronger winds increase droplet impacts, and higher cloud-water content provides more available liquid. This makes the Makkonen model both physically consistent and practical, requiring only wind speed and cloud-liquid content—exactly the variables produced by the Vortex high-resolution simulations.</p>
+
+<div align="center">
+<img src="../vortex/img/icing.png" width="75%">
+<br><font size="2">Vortex ICING flow chart scheme. Credit: Albert Bosch</font>
+</div>
+
+<h2>Deliverables</h2>
+
+<p>
+The outputs of Vortex Icing are two types: <b>map layers</b> for the full domain, and <b>time series and reports</b> for
+specific points. All heights are available between 50 and 300 m.
+</p>
+
+<h3>Map layers:</h3>
+
+<ul>
+    <li>Minimum temperature</li>
+    <li>Maximum icing density</li>
+    <li>Cold-climate days</li>
+    <li>Hours with icing rate above 10 g/h</li>
+    <li>Days below 5°C, 0°C, −5°C, −10°C, −15°C, −20°C</li>
+</ul>
+
+<p>
+Map layers can be delivered as ESRI grids, Google Earth KMZ files, or WRG files.
+</p>
+
+<div align="center">
+<img src="../vortex/img/icelayer.png" width="50%">
+<br><font size="2">Vortex ICING Sample. Google Earth KML output for icing-rate hours per year</font>
+</div>
+
+<h3>Time series:</h3>
+
+<p>
+The time-series files include the following variables at each turbine location:
+</p>
+
+<pre>
+YYYYMMDD HHMM   dmdt(g/h)  T100(C)  Tref(C)  Mref(m/s)  Dref(deg)  RHref(%)
+20201126 2300         -         -      -0.1        6.3        185       98.4
+20201127 0000         -         -       0.1        7.1        195       98.4
+20201127 0100      16.6      -0.2       0.2        9.4        206       98.3
+20201127 0200      12.2      -0.4       0.2       10.5        211       98.3
+20201127 0300      19.4      -0.2       0.1       10.9        213       98.5
+20201127 0400      40.3       0.1       0.1       10.9        214       98.8
+20201127 0500      64.5      -0.1       0.1       10.4        218       99.5
+20201127 0600      76.3      -0.1      -0.1        9.6        221      100.0
+20201127 0700      72.6      -0.2      -0.1        8.6        223      100.0
+20201127 0800      53.8      -0.3      -0.1        7.9        226      100.0
+20201127 0900      43.9      -0.3      -0.2        7.5        232      100.0
+20201127 1000      38.3      -0.6      -0.6        7.2        238       99.4
+20201127 1100      17.8      -1.0      -0.8        7.0        237       97.5
+20201127 1200         -         -      -1.1        7.0        234       96.7
+20201127 1300         -         -      -1.4        7.0        232       96.4
+</pre>
+
+<h3>Icing Report:</h3>
+
+<p>
+The report summarises icing statistics at each turbine location:
+</p>
+
+<ul>
+    <li>Bin/Sector Occurrence Table during icing episodes</li>
+    <li>Ice hours per year</li>
+    <li>Wind-rose and Weibull distribution during icing episodes</li>
+</ul>
+
+<div align="center">
+<img src="../vortex/img/icetable.png" width="75%">
+<br><font size="2">Vortex ICING Sample. Bin/Sector Occurrence Table during icing episodes</font>
+</div>
+
+<h2>References</h2>
+
+<ul>
+    <li>Bosch, A. et al. (2019): Effective validation for time-series icing modelling using operational SCADA data. WindEurope Annual Event 2019, Bilbao.</li>
+    <li>Casso, P. et al. (2012): Evaluation of WRF mesoscale model for icing events characterization. EWEA Annual Event 2012, Copenhagen.</li>
+    <li>Makkonen, L., & Peltola, E. (2007). A generalized physical model for ice accretion on wind turbine blades. <i>Journal of Applied Meteorology and Climatology</i>, 46(10), 1667–1679.</li>
+    <li>Thompson, G., P. R. Field, R. M. Rasmussen, and W. D. Hall (2008): Explicit forecasts of winter precipitation using an improved bulk microphysics scheme. <i>Mon. Wea. Rev.</i>, 136, 5095–5115.</li>
+</ul>
